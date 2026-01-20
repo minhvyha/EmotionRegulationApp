@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { emotions } from '@/lib/emotions-data';
-import type { Emotion, Step } from '@/lib/emotions-data';
-import { EmotionIcon } from '@/components/emotion-icons';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { useState } from "react";
+import { emotions } from "@/lib/emotions-data";
+import type { Emotion, Step } from "@/lib/emotions-data";
+import { EmotionIcon } from "@/components/emotion-icons";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, LucideMessageCircleQuestion } from "lucide-react";
 
 export default function EmotionRegulationApp() {
   const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(null);
@@ -17,7 +17,10 @@ export default function EmotionRegulationApp() {
   };
 
   const handleContinue = () => {
-    if (selectedEmotion && currentStepIndex < selectedEmotion.steps.length - 1) {
+    if (
+      selectedEmotion &&
+      currentStepIndex < selectedEmotion.steps.length - 1
+    ) {
       setCurrentStepIndex(currentStepIndex + 1);
     }
   };
@@ -40,9 +43,9 @@ export default function EmotionRegulationApp() {
 
   if (!selectedEmotion) {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-start px-6 py-12">
+      <div className="min-h-screen custom-app-bg  flex flex-col items-center justify-start px-[38px] py-[60px]">
         <div className="w-full max-w-md">
-          <h1 className="text-foreground text-3xl font-medium text-center mb-3 text-balance">
+          <h1 className="text-foreground text-[32px]  font-medium text-center mb-3 text-balance">
             I am feeling...
           </h1>
           <p className="text-muted-foreground text-center mb-10">
@@ -54,27 +57,44 @@ export default function EmotionRegulationApp() {
               <button
                 key={emotion.id}
                 onClick={() => handleEmotionSelect(emotion)}
-                className="bg-card hover:bg-card/80 transition-colors cursor-pointer rounded-2xl p-8 flex flex-col items-center justify-center gap-4 shadow-sm border border-border/50"
+                className="bg-card/60 hover:bg-card/80 transition-colors cursor-pointer rounded-2xl p-4 flex flex-col items-center justify-center gap-4 shadow-md"
               >
-                <EmotionIcon name={emotion.icon as any} className="text-foreground/70" />
-                <span className="text-foreground text-base font-medium">{emotion.name}</span>
+                <EmotionIcon
+                  name={emotion.icon as any}
+                  className="text-foreground/70"
+                />
+                <span className="text-foreground text-base font-medium">
+                  {emotion.name}
+                </span>
               </button>
             ))}
           </div>
 
-          <div className="flex justify-center">
+          <div className="flex justify-center items-center">
             <Button
               onClick={() => handleEmotionSelect(emotions[emotions.length - 1])}
               variant="outline"
-              className="rounded-full bg-card hover:bg-card/80 text-foreground border-border/50 px-8"
+              className="rounded-full bg-[#BADEEA99] hover:bg-[#badeeae9] text-[#3A6978] hover:text-[#3A6978] shadow-md font-bold border-none cursor-pointer px-8"
             >
-              I&apos;m not sure
+              I&apos;m not sure{" "}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className="lucide lucide-circle-question-mark-icon lucide-circle-question-mark"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                <path d="M12 17h.01" />
+              </svg>
             </Button>
           </div>
-
-          <p className="text-muted-foreground text-center mt-12 text-sm">
-            Remember, you can stop at any time
-          </p>
         </div>
       </div>
     );
@@ -84,7 +104,7 @@ export default function EmotionRegulationApp() {
   const isLastStep = currentStepIndex === selectedEmotion.steps.length - 1;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-start px-6 py-8">
+    <div className="min-h-screen custom-app-bg flex flex-col items-center justify-start px-6 py-8">
       <div className="w-full max-w-md">
         {/* Header */}
         <button
@@ -92,7 +112,13 @@ export default function EmotionRegulationApp() {
           className="flex items-center cursor-pointer gap-2 text-foreground/70 hover:text-foreground transition-colors mb-6"
         >
           <ArrowLeft className="w-5 h-5" />
-          <span className="text-base">{currentStep.type === 'completion' ? 'Exit' : currentStep.canGoBack ? 'Exit' : 'Back'}</span>
+          <span className="text-base">
+            {currentStep.type === "completion"
+              ? "Exit"
+              : currentStep.canGoBack
+                ? "Exit"
+                : "Back"}
+          </span>
         </button>
 
         {/* Title */}
@@ -114,7 +140,9 @@ export default function EmotionRegulationApp() {
 
         {/* Footer */}
         <p className="text-muted-foreground text-center mt-12 text-sm">
-          {currentStep.type === 'completion' ? 'Come back anytime.' : 'Remember, you can stop at any time'}
+          {currentStep.type === "completion"
+            ? "Come back anytime."
+            : "Remember, you can stop at any time"}
         </p>
       </div>
     </div>
@@ -130,10 +158,17 @@ interface StepContentProps {
   isLastStep: boolean;
 }
 
-function StepContent({ step, emotionName, onContinue, onBack, onDone, isLastStep }: StepContentProps) {
+function StepContent({
+  step,
+  emotionName,
+  onContinue,
+  onBack,
+  onDone,
+  isLastStep,
+}: StepContentProps) {
   const [selectedChoice, setSelectedChoice] = useState<string | null>(null);
 
-  if (step.type === 'validation') {
+  if (step.type === "validation") {
     return (
       <div className="bg-card rounded-3xl p-12 shadow-lg border border-border/30 flex flex-col items-center min-h-[420px] justify-center">
         {step.icon && (
@@ -166,7 +201,7 @@ function StepContent({ step, emotionName, onContinue, onBack, onDone, isLastStep
     );
   }
 
-  if (step.type === 'choice') {
+  if (step.type === "choice") {
     return (
       <div className="space-y-6">
         <div className="grid grid-cols-2 gap-4">
@@ -175,10 +210,15 @@ function StepContent({ step, emotionName, onContinue, onBack, onDone, isLastStep
               key={choice.id}
               onClick={() => setSelectedChoice(choice.id)}
               className={`bg-card hover:bg-card/80 transition-all rounded-2xl p-8 flex flex-col items-center justify-center gap-4 shadow-sm border-2 ${
-                selectedChoice === choice.id ? 'border-primary' : 'border-border/30'
+                selectedChoice === choice.id
+                  ? "border-primary"
+                  : "border-border/30"
               }`}
             >
-              <EmotionIcon name={choice.icon as any} className="text-foreground/70" />
+              <EmotionIcon
+                name={choice.icon as any}
+                className="text-foreground/70"
+              />
               <span className="text-foreground text-sm font-medium text-center text-balance">
                 {choice.label}
               </span>
@@ -198,7 +238,7 @@ function StepContent({ step, emotionName, onContinue, onBack, onDone, isLastStep
     );
   }
 
-  if (step.type === 'completion') {
+  if (step.type === "completion") {
     return (
       <div className="bg-card rounded-3xl p-12 shadow-lg border border-border/30 flex flex-col items-center min-h-[450px] justify-center">
         {step.icon && (
