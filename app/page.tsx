@@ -308,8 +308,8 @@ function StepContent({
             <Button
               onClick={onBack}
               variant="outline"
-              style={{ boxShadow: "0px 2px 2px 0px #00000040" }}
-              className="rounded-[20px] cursor-pointer bg-[#F0F0F033] hover:bg-[#E0E0E033] text-[#2C4F5A] border border-border/30 p-2 w-[96px]"
+              style={{ boxShadow: "0px 2px 2px 0px #00000050" }}
+              className="rounded-[20px] cursor-pointer bg-[#F0F0F033] hover:bg-[#E0E0E033] text-[#2C4F5A] font-bold text-[18px] border border-border/30 p-2 w-[96px]"
             >
               Back
             </Button>
@@ -317,7 +317,7 @@ function StepContent({
           <Button
             onClick={onContinue}
             style={{ boxShadow: "0px 2px 2px 0px #00000040" }}
-            className="rounded-full cursor-pointer bg-[#BADEEA99] hover:bg-primary/90 text-[#3A6978] font-bold px-[20px] py-[8px] text-base"
+            className="rounded-full cursor-pointer bg-[#BADEEA99] hover:bg-[#badeeab4] text-[#3A6978] font-bold px-[20px] py-[8px] text-[18px]"
           >
             Continue
           </Button>
