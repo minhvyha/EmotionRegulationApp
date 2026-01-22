@@ -80,7 +80,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 .text-foreground { color: var(--foreground); }
-.custom-app-bg {
+body {
   background-image: url('/background.png');
   background-size: cover;
   background-position: center;
