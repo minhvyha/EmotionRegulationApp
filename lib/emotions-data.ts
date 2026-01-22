@@ -1,7 +1,7 @@
 export type StepType = 
   | 'validation'
   | 'choice'
-  | 'breathing'
+  | 'grounding'
   | 'grounding'
   | 'somatic'
   | 'completion';
@@ -11,7 +11,7 @@ export interface Step {
   type: StepType;
   title?: string;
   icon?: string;
-  content: {
+  content?: {
     heading?: string;
     subheading?: string;
     description?: string;
@@ -47,8 +47,8 @@ export const emotions: Emotion[] = [
         },
       },
       {
-        id: 'breathing',
-        type: 'breathing',
+        id: 'grounding',
+        type: 'grounding',
         title: 'Grounding Exercise',
         content: {
           heading: 'Take 5 deep breaths',
@@ -81,7 +81,7 @@ export const emotions: Emotion[] = [
         title: 'Grounding Exercise',
         content: {
           heading: "Listen for three distinct sounds",
-          description: 'e.g., distant traffic, a clock ticking, your own breathing',
+          description: 'e.g., distant traffic, a clock ticking, your own grounding',
         },
         canGoBack: true,
       },{
@@ -130,9 +130,9 @@ export const emotions: Emotion[] = [
       },
       
       {
-        id: 'breathing',
-        type: 'breathing',
-        title: 'Breathing Exercise',
+        id: 'grounding',
+        type: 'grounding',
+        title: 'Grounding Exercise',
         content: {
           heading: 'Take 5 deep breaths',
           description: 'Inhale for 4 seconds, hold for 2 seconds, exhale for 6 seconds',
@@ -203,9 +203,9 @@ export const emotions: Emotion[] = [
         },
       },
       {
-        id: 'breathing',
-        type: 'breathing',
-        title: 'Breathing Exercise',
+        id: 'grounding',
+        type: 'grounding',
+        title: 'Grounding Exercise',
         content: {
           heading: 'Take 5 deep breaths',
           description: 'Inhale for 4 seconds, hold for 2 seconds, exhale for 6 seconds',
@@ -218,7 +218,7 @@ export const emotions: Emotion[] = [
         title: 'Body Tension Release',
         content: {
           heading: "Find a place to sit or lie down",
-          description: 'Keep breathing deeply',
+          description: 'Keep grounding deeply',
         },
         canGoBack: true,
       },
@@ -302,15 +302,7 @@ export const emotions: Emotion[] = [
           description: "Let's take this one step at a time.",
         },
       },
-      // {
-      //   id: 'choice',
-      //   type: 'choice',
-      //   title: 'Choose what fits best',
-      //   choices: [
-      //     { id: 'heavy', label: 'Heavy / Flat', icon: 'cloud' },
-      //     { id: 'tense', label: 'Tense / Activated', icon: 'lightning' },
-      //   ],
-      // },
+   
       {
         id: 'somatic',
         type: 'somatic',
@@ -322,8 +314,8 @@ export const emotions: Emotion[] = [
         canGoBack: true,
       },
       {
-        id: 'breathing',
-        type: 'breathing',
+        id: 'grounding',
+        type: 'grounding',
         title: 'Somatic Release',
         content: {
           heading: 'Use up your energy safely in other ways',
@@ -339,6 +331,7 @@ export const emotions: Emotion[] = [
           heading: 'You did what you could right now.',
           description: 'Take a deep breath and carry this moment of calm with you.',
         },
+        
       },
     ],
   },
@@ -357,8 +350,8 @@ export const emotions: Emotion[] = [
         },
       },
       {
-        id: 'breathing',
-        type: 'breathing',
+        id: 'grounding',
+        type: 'grounding',
         title: 'Self-Compassion Break',
         content: {
           heading: 'Take 5 deep breaths',
@@ -432,9 +425,9 @@ export const emotions: Emotion[] = [
         },
       },
       {
-        id: 'breathing',
-        type: 'breathing',
-        title: 'Breathing Exercise',
+        id: 'grounding',
+        type: 'grounding',
+        title: 'Grounding Exercise',
         content: {
           heading: 'Take 5 deep breaths',
           description: 'Inhale for 4 seconds, hold for 2 seconds, exhale for 6 seconds',
@@ -507,9 +500,9 @@ export const emotions: Emotion[] = [
         },
       },
       {
-        id: 'breathing',
-        type: 'breathing',
-        title: 'Breathing Exercise',
+        id: 'grounding',
+        type: 'grounding',
+        title: 'Grounding Exercise',
         content: {
           heading: 'Take 5 deep breaths',
           description: 'Inhale for 4 seconds, hold for 2 seconds, exhale for 6 seconds',
@@ -581,9 +574,9 @@ export const emotions: Emotion[] = [
       },
 
       {
-        id: 'breathing',
-        type: 'breathing',
-        title: 'Breathing Exercise',
+        id: 'grounding',
+        type: 'grounding',
+        title: 'Grounding Exercise',
         content: {
           heading: 'Take 5 deep breaths',
           description: 'Inhale for 4 seconds, hold for 2 seconds, exhale for 6 seconds',
@@ -615,7 +608,7 @@ export const emotions: Emotion[] = [
         title: 'Grounding Exercise',
         content: {
           heading: "Listen for three distinct sounds",
-          description: 'e.g., distant traffic, a clock ticking, your own breathing',
+          description: 'e.g., distant traffic, a clock ticking, your own grounding',
         },
         canGoBack: true,
       },{
@@ -664,33 +657,24 @@ export const emotions: Emotion[] = [
         },
       },
       {
-        id: 'breathing',
-        type: 'breathing',
-        title: 'Breathing Exercise',
+        id: 'grounding',
+        type: 'grounding',
+        title: 'Grounding Exercise',
         content: {
           heading: 'Take 5 deep breaths',
           description: 'Inhale for 4 seconds, hold for 2 seconds, exhale for 6 seconds',
         },
         canGoBack: true,
       },
-      {
-        id: 'grounding',
-        type: 'grounding',
-        title: 'Grounding Exercise',
-        content: {
-          heading: "Let's ground together",
-          description: 'Place your feet on the floor. Take one slow breath in... and out.\n\nJust notice where you are.',
-        },
-        canGoBack: true,
-      },
-      {
-        id: 'completion',
-        type: 'completion',
-        icon: 'wind',
-        content: {
-          heading: 'You did what you could right now.',
-          description: 'Take a deep breath and carry this moment of calm with you.',
-        },
+
+         {
+        id: 'choice',
+        type: 'choice',
+        title: 'Choose what fits best',
+        choices: [
+          { id: 'heavy', label: 'Heavy / Flat', icon: 'cloud' },
+          { id: 'tense', label: 'Tense / Activated', icon: 'lightning' },
+        ],
       },
     ],
   },

@@ -110,7 +110,7 @@ interface EmotionIconProps {
 
 export function EmotionIcon({ name, className, size }: EmotionIconProps) {
   const file = NAME_TO_FILE[name] ?? NAME_TO_FILE.question;
-  const defaultSize = name === "stones" || name === "wind" ? 80 : 50;
+  const defaultSize = name === "stones" || name === "wind" ? 100 : 50;
   const finalSize = size ?? defaultSize;
 
   return (

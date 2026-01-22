@@ -85,8 +85,8 @@ export default function EmotionRegulationApp() {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 className="lucide lucide-circle-question-mark-icon lucide-circle-question-mark"
               >
                 <circle cx="12" cy="12" r="10" />
@@ -102,30 +102,19 @@ export default function EmotionRegulationApp() {
 
   const currentStep = selectedEmotion.steps[currentStepIndex];
   const isLastStep = currentStepIndex === selectedEmotion.steps.length - 1;
-
   return (
-    <div className="min-h-screen custom-app-bg flex flex-col items-center justify-start px-6 py-8">
+    <div className="min-h-screen custom-app-bg flex flex-col items-center justify-start px-[38px] py-[60px]">
       <div className="w-full max-w-md">
-        {/* Header */}
-        <button
-          onClick={handleExit}
-          className="flex items-center cursor-pointer gap-2 text-foreground/70 hover:text-foreground transition-colors mb-6"
-        >
-          <ArrowLeft className="w-5 h-5" />
-          <span className="text-base">
-            {currentStep.type === "completion"
-              ? "Exit"
-              : currentStep.canGoBack
-                ? "Exit"
-                : "Back"}
-          </span>
-        </button>
-
-        {/* Title */}
-        {currentStep.title && (
-          <h1 className="text-foreground text-2xl font-semibold mb-8 text-balance">
-            {currentStep.title}
-          </h1>
+        {currentStep.type !== "completion" && (
+          <button
+            onClick={handleExit}
+            className="flex items-center cursor-pointer gap-2  hover:text-foreground transition-colors text-[#3A6978] mb-6"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span className="text-base">
+              {currentStep.type === "validation" ? "Back" : "Exit"}
+            </span>
+          </button>
         )}
 
         {/* Step Content */}
@@ -135,11 +124,12 @@ export default function EmotionRegulationApp() {
           onContinue={handleContinue}
           onBack={handleBack}
           onDone={handleDone}
+          selectedEmotion={selectedEmotion}
           isLastStep={isLastStep}
         />
 
         {/* Footer */}
-        <p className="text-muted-foreground text-center mt-12 text-sm">
+        <p className=" text-center mt-[62px] text-[#2C4F5A] font-medium text-[18px]">
           {currentStep.type === "completion"
             ? "Come back anytime."
             : "Remember, you can stop at any time"}
@@ -156,6 +146,7 @@ interface StepContentProps {
   onBack: () => void;
   onDone: () => void;
   isLastStep: boolean;
+  selectedEmotion: Emotion | null;
 }
 
 function StepContent({
@@ -164,100 +155,82 @@ function StepContent({
   onContinue,
   onBack,
   onDone,
+  selectedEmotion,
   isLastStep,
 }: StepContentProps) {
   const [selectedChoice, setSelectedChoice] = useState<string | null>(null);
 
-  if (step.type === "validation") {
+  if (step.type === "validation" && step.content) {
     return (
-      <div className="bg-card rounded-3xl p-12 shadow-lg border border-border/30 flex flex-col items-center min-h-[420px] justify-center">
-        {step.icon && (
-          <div className="mb-8 text-foreground/60">
-            <EmotionIcon name={step.icon as any} />
-          </div>
+      <>
+        {/* Title */}
+        {selectedEmotion && selectedEmotion.name && (
+          <h1 className=" text-center text-[32px] font-semibold mb-4 text-balance text-[#2C4F5A]">
+            {selectedEmotion.name}
+          </h1>
         )}
-        <h2 className="text-foreground text-2xl font-semibold text-center mb-3 text-balance">
-          {step.content.heading}
-        </h2>
-        {step.content.subheading && (
-          <p className="text-muted-foreground text-center mb-3 text-balance">
-            {step.content.subheading}
-          </p>
-        )}
-        {step.content.description && (
-          <p className="text-muted-foreground text-center text-balance">
-            {step.content.description}
-          </p>
-        )}
-        <div className="mt-10">
-          <Button
-            onClick={onContinue}
-            className="rounded-full cursor-pointer bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-6 text-base"
-          >
-            Continue
-          </Button>
-        </div>
-      </div>
-    );
-  }
 
-  if (step.type === "choice") {
-    return (
-      <div className="space-y-6">
-        <div className="grid grid-cols-2 gap-4">
-          {step.choices?.map((choice) => (
-            <button
-              key={choice.id}
-              onClick={() => setSelectedChoice(choice.id)}
-              className={`bg-card hover:bg-card/80 transition-all rounded-2xl p-8 flex flex-col items-center justify-center gap-4 shadow-sm border-2 ${
-                selectedChoice === choice.id
-                  ? "border-primary"
-                  : "border-border/30"
-              }`}
+        <div
+          style={{ boxShadow: "0px 2px 2px 0px #00000040" }}
+          className="bg-[#FFFFFF99] rounded-[20px] pb-[32px] pt-[72px] px-4  border border-border/30 flex flex-col items-center justify-center min-h-[528px]  max-h-[530px]"
+        >
+          {step.icon && (
+            <div className="mb-[32px] text-foreground/60">
+              <EmotionIcon name={step.icon as any} />
+            </div>
+          )}
+          <h2 className="text-foreground text-[28px] font-semibold text-center mb-4 ">
+            {step.content.heading}
+          </h2>
+          {step.content.subheading && (
+            <p className="text-muted-foreground text-center text-[18px] mb-4 ">
+              {step.content.subheading}
+            </p>
+          )}
+          {step.content.description && (
+            <p className="text-muted-foreground text-center text-[18px] ">
+              {step.content.description}
+            </p>
+          )}
+          <div className="mt-[70px]">
+            <Button
+              onClick={onContinue}
+              style={{ boxShadow: "0px 2px 2px 0px #00000040" }}
+              className="rounded-full cursor-pointer bg-[#BADEEA99] hover:bg-primary/90 text-[#3A6978] font-bold px-[20px] py-[8px] text-base"
             >
-              <EmotionIcon
-                name={choice.icon as any}
-                className="text-foreground/70"
-              />
-              <span className="text-foreground text-sm font-medium text-center text-balance">
-                {choice.label}
-              </span>
-            </button>
-          ))}
+              Continue
+            </Button>
+          </div>
         </div>
-        <div className="flex justify-center">
-          <Button
-            onClick={onContinue}
-            variant="outline"
-            className="rounded-full bg-card hover:bg-card/80 text-foreground border-border/50 px-8"
-          >
-            I&apos;m still not sure
-          </Button>
-        </div>
-      </div>
+      </>
     );
   }
 
-  if (step.type === "completion") {
+  if (step.type === "completion" && step.content) {
     return (
-      <div className="bg-card rounded-3xl p-12 shadow-lg border border-border/30 flex flex-col items-center min-h-[450px] justify-center">
+      <div
+        style={{ boxShadow: "0px 2px 2px 0px #00000040" }}
+        className="bg-[#FFFFFF99] rounded-[20px] pb-[32px] pt-[72px] px-4 pt-[64px] pb-[32px] m-0  flex flex-col items-center min-h-[619px] max-h-[619px] "
+      >
+        {" "}
         {step.icon && (
           <div className="mb-10 text-foreground/60">
             <EmotionIcon name={step.icon as any} />
           </div>
         )}
-        <h2 className="text-foreground text-2xl font-semibold text-center mb-4 text-balance">
+        <h2 className="text-[#2C4F5A] text-[32px] font-semibold text-center mb-[24px]">
           {step.content.heading}
         </h2>
         {step.content.description && (
-          <p className="text-muted-foreground text-center text-balance">
+          <p className="text-[#677E86] text-center text-[18px] ">
             {step.content.description}
           </p>
         )}
-        <div className="mt-12">
+        <div className="mt-auto">
           <Button
             onClick={onDone}
-            className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-6 text-base"
+            style={{ boxShadow: "0px 2px 2px 0px #00000040" }}
+            className="rounded-full bg-[#BADEEA99] hover:bg-primary/90 text-[#2C4F5A] w-[111px] h-fit p-2 border border-border/30 font-semibold text-[22px] "
           >
             Done
           </Button>
@@ -266,36 +239,95 @@ function StepContent({
     );
   }
 
+  if (step.type === "choice" && step.choices) {
+    return (
+      <>
+        <div className="h-[421px]">
+          {step && step.title && (
+            <h1 className=" text-center text-[32px]  font-semibold mb-4 text-balance text-[#2C4F5A]">
+              {step.title}
+            </h1>
+          )}
+
+          <div className="flex-1 flex flex-row items-center justify-center text-center min-w-[287px]">
+            <h2 className="text-[#2C4F5A] text-[20px] font-semibold mb-6 text-balance">
+              {step.content?.heading}
+            </h2>
+            <div className="flex flex-col gap-4 w-full">
+              {step.choices.map((choice) => (
+                <button
+                  key={choice.id}
+                  onClick={() => setSelectedChoice(choice.id)}
+                  className={`w-full text-[#2C4F5A] text-[18px] font-medium p-4 rounded-[12px] border border-border/30 ${
+                    selectedChoice === choice.id
+                      ? "bg-[#BADEEA99] hover:bg-primary/90"
+                      : "bg-[#F0F0F033] hover:bg-[#E0E0E033]"
+                  }`}
+                >
+                  {choice.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="flex gap-4 mt-8">
+            <Button
+              onClick={onContinue}
+              disabled={!selectedChoice}
+              style={{ boxShadow: "0px 2px 2px 0px #00000040" }}
+              className="rounded-full cursor-pointer bg-[#BADEEA99] hover:bg-primary/90 text-[#3A6978] font-bold px-[20px] py-[8px] text-base"
+            >
+              Continue
+            </Button>
+          </div>
+        </div>
+      </>
+    );
+  }
   // Default step layout (breathing, grounding, somatic)
+  if (!step.content) {
+    return null;
+  }
   return (
-    <div className="bg-card rounded-3xl p-12 shadow-lg border border-border/30 flex flex-col items-center min-h-[420px] justify-between">
-      <div className="flex-1 flex flex-col items-center justify-center text-center">
-        <h2 className="text-foreground text-xl font-semibold mb-6 text-balance">
-          {step.content.heading}
-        </h2>
-        {step.content.description && (
-          <p className="text-muted-foreground text-balance whitespace-pre-line leading-relaxed">
-            {step.content.description}
-          </p>
-        )}
-      </div>
-      <div className="flex gap-4 mt-8">
-        {step.canGoBack && (
+    <>
+      {step && step.title && (
+        <h1 className=" text-center text-[32px]  font-semibold mb-4 text-balance text-[#2C4F5A]">
+          {step.title}
+        </h1>
+      )}
+      <div
+        style={{ boxShadow: "0px 2px 2px 0px #00000040" }}
+        className="bg-[#FFFFFF99] rounded-[20px] pb-[32px] pt-[72px] px-4 m-0  flex flex-col items-center min-h-[528px] max-h-[530px] justify-center"
+      >
+        <div className="flex-1 flex flex-col items-center justify-center text-center min-w-[287px]">
+          <h2 className="text-[#2C4F5A] text-[20px] font-semibold mb-6 text-balance">
+            {step.content.heading}
+          </h2>
+          {step.content.description && (
+            <p className="text-[#677E86] text-[20px] ">
+              {step.content.description}
+            </p>
+          )}
+        </div>
+        <div className="flex gap-4 mt-8">
+          {step.canGoBack && (
+            <Button
+              onClick={onBack}
+              variant="outline"
+              style={{ boxShadow: "0px 2px 2px 0px #00000040" }}
+              className="rounded-[20px] cursor-pointer bg-[#F0F0F033] hover:bg-[#E0E0E033] text-[#2C4F5A] border border-border/30 p-2 w-[96px]"
+            >
+              Back
+            </Button>
+          )}
           <Button
-            onClick={onBack}
-            variant="outline"
-            className="rounded-full cursor-pointer bg-secondary hover:bg-secondary/80 text-secondary-foreground border-0 px-8 py-6"
+            onClick={onContinue}
+            style={{ boxShadow: "0px 2px 2px 0px #00000040" }}
+            className="rounded-full cursor-pointer bg-[#BADEEA99] hover:bg-primary/90 text-[#3A6978] font-bold px-[20px] py-[8px] text-base"
           >
-            Back
+            Continue
           </Button>
-        )}
-        <Button
-          onClick={onContinue}
-          className="rounded-full cursor-pointer bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-6"
-        >
-          Continue
-        </Button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
