@@ -145,7 +145,7 @@ interface StepContentProps {
   onDone: () => void;
   isLastStep: boolean;
   selectedEmotion: Emotion | null;
-  handleEmotionSelect: (emotion: Emotion) => void;
+  handleEmotionSelect: (emotion: Emotion, stepIndex?: number) => void;
   emotions: Emotion[];
 }
 
