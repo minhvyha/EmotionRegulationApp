@@ -12,6 +12,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: 'Emotion Regulation App',
   description: 'Take a moment to regulate your emotions with guided exercises',
+  
   icons: {
     icon: [
       {
@@ -38,6 +39,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"></meta>
+      </head>
       <body className={`font-sans antialiased bg-background`}
       >
         {children}

@@ -101,3 +101,12 @@ body::before {
     @apply bg-background text-foreground;
   }
 }
+header {
+  /* Add padding to the top so text stays below the Dynamic Island */
+  padding-top: env(safe-area-inset-top);
+}
+
+footer {
+  /* Add padding to the bottom so buttons stay above the search bar */
+  padding-bottom: env(safe-area-inset-bottom);
+}
