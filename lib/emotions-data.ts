@@ -331,7 +331,7 @@ export const emotions: Emotion[] = [
           heading: 'You did what you could right now.',
           description: 'Take a deep breath and carry this moment of calm with you.',
         },
-        
+
       },
     ],
   },
@@ -672,8 +672,8 @@ export const emotions: Emotion[] = [
         type: 'choice',
         title: 'Choose what fits best',
         choices: [
-          { id: 'heavy', label: 'Heavy / Flat', icon: 'cloud' },
-          { id: 'tense', label: 'Tense / Activated', icon: 'lightning' },
+          { id: 'sad', label: 'Heavy / Flat', icon: 'cloud' },
+          { id: 'stressed', label: 'Tense / Activated', icon: 'lightning' },
         ],
       },
     ],

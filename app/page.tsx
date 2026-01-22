@@ -11,9 +11,9 @@ export default function EmotionRegulationApp() {
   const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(null);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
-  const handleEmotionSelect = (emotion: Emotion) => {
+  const handleEmotionSelect = (emotion: Emotion, stepIndex?: number) => {
     setSelectedEmotion(emotion);
-    setCurrentStepIndex(0);
+    setCurrentStepIndex(stepIndex ?? 0);
   };
 
   const handleContinue = () => {
@@ -44,7 +44,6 @@ export default function EmotionRegulationApp() {
   if (!selectedEmotion) {
     return (
       <div className="min-h-screen custom-app-bg  flex flex-col items-center justify-start px-[38px] py-[60px]">
-        <div className="w-full max-w-md">
           <h1 className="text-foreground text-[32px]  font-medium text-center mb-3 text-balance">
             I am feeling...
           </h1>
@@ -95,7 +94,6 @@ export default function EmotionRegulationApp() {
               </svg>
             </Button>
           </div>
-        </div>
       </div>
     );
   }
@@ -104,11 +102,10 @@ export default function EmotionRegulationApp() {
   const isLastStep = currentStepIndex === selectedEmotion.steps.length - 1;
   return (
     <div className="min-h-screen custom-app-bg flex flex-col items-center justify-start px-[38px] py-[60px]">
-      <div className="w-full max-w-md">
         {currentStep.type !== "completion" && (
           <button
             onClick={handleExit}
-            className="flex items-center cursor-pointer gap-2  hover:text-foreground transition-colors text-[#3A6978] mb-6"
+            className="flex items-center mr-auto cursor-pointer gap-2  hover:text-foreground transition-colors text-[#3A6978] mb-6"
           >
             <ArrowLeft className="w-5 h-5" />
             <span className="text-base">
@@ -126,16 +123,17 @@ export default function EmotionRegulationApp() {
           onDone={handleDone}
           selectedEmotion={selectedEmotion}
           isLastStep={isLastStep}
+          handleEmotionSelect={handleEmotionSelect}
+          emotions={emotions}
         />
 
         {/* Footer */}
-        <p className=" text-center mt-[62px] text-[#2C4F5A] font-medium text-[18px]">
+        <p className=" text-center mt-auto text-[#2C4F5A] font-medium text-[18px]">
           {currentStep.type === "completion"
             ? "Come back anytime."
             : "Remember, you can stop at any time"}
         </p>
       </div>
-    </div>
   );
 }
 
@@ -147,6 +145,8 @@ interface StepContentProps {
   onDone: () => void;
   isLastStep: boolean;
   selectedEmotion: Emotion | null;
+  handleEmotionSelect: (emotion: Emotion) => void;
+  emotions: Emotion[];
 }
 
 function StepContent({
@@ -157,6 +157,8 @@ function StepContent({
   onDone,
   selectedEmotion,
   isLastStep,
+  handleEmotionSelect,
+  emotions,
 }: StepContentProps) {
   const [selectedChoice, setSelectedChoice] = useState<string | null>(null);
 
@@ -165,7 +167,7 @@ function StepContent({
       <>
         {/* Title */}
         {selectedEmotion && selectedEmotion.name && (
-          <h1 className=" text-center text-[32px] font-semibold mb-4 text-balance text-[#2C4F5A]">
+          <h1 className=" text-center text-[32px]  font-semibold mb-4 text-balance text-[#2C4F5A]">
             {selectedEmotion.name}
           </h1>
         )}
@@ -242,43 +244,36 @@ function StepContent({
   if (step.type === "choice" && step.choices) {
     return (
       <>
-        <div className="h-[421px]">
+        <div className="h-[421px] flex flex-col items-center justify-between">
           {step && step.title && (
-            <h1 className=" text-center text-[32px]  font-semibold mb-4 text-balance text-[#2C4F5A]">
+            <h1 className=" text-center text-[32px]  font-semibold mb-4  text-[#2C4F5A]">
               {step.title}
             </h1>
           )}
+        <div className="flex flex-col gap-[24px]">
 
-          <div className="flex-1 flex flex-row items-center justify-center text-center min-w-[287px]">
-            <h2 className="text-[#2C4F5A] text-[20px] font-semibold mb-6 text-balance">
-              {step.content?.heading}
-            </h2>
-            <div className="flex flex-col gap-4 w-full">
-              {step.choices.map((choice) => (
-                <button
-                  key={choice.id}
-                  onClick={() => setSelectedChoice(choice.id)}
-                  className={`w-full text-[#2C4F5A] text-[18px] font-medium p-4 rounded-[12px] border border-border/30 ${
-                    selectedChoice === choice.id
-                      ? "bg-[#BADEEA99] hover:bg-primary/90"
-                      : "bg-[#F0F0F033] hover:bg-[#E0E0E033]"
-                  }`}
-                >
-                  {choice.label}
-                </button>
-              ))}
-            </div>
+          <div className=" flex flex-row items-center justify-center gap-[24px] text-center h-fit">
+            {step.choices.map((choice) => (
+              <button
+                key={choice.id}
+                onClick={() => handleEmotionSelect(emotions.find(e => e.id === choice.id)!, 1 )}
+                style={{ boxShadow: "0px 2px 2px 0px #00000040" }}
+                className={`w-[148px] text-[#3A6978] text-[13px] font-semibold p-4 rounded-[20px] flex flex-col gap-4 items-center bg-[#FFFFFF99] border border-border/30 hover:bg-[#FFFFFFCC] hover:scale-105 transition-transform`}
+              >
+                <EmotionIcon name={choice.icon as any} size={75}></EmotionIcon>
+                {choice.label}
+              </button>
+            ))}
           </div>
-          <div className="flex gap-4 mt-8">
-            <Button
+            <button
               onClick={onContinue}
               disabled={!selectedChoice}
               style={{ boxShadow: "0px 2px 2px 0px #00000040" }}
-              className="rounded-full cursor-pointer bg-[#BADEEA99] hover:bg-primary/90 text-[#3A6978] font-bold px-[20px] py-[8px] text-base"
+              className="rounded-[20px] cursor-pointer w-[200px] mx-auto bg-[#FFFFFF99] hover:bg-[#FFFFFFCC] text-[#3A6978] font-bold px-[20px] h-fit p-4 text-base"
             >
-              Continue
-            </Button>
-          </div>
+              I’m still not sure
+            </button>
+        </div>
         </div>
       </>
     );
@@ -290,7 +285,7 @@ function StepContent({
   return (
     <>
       {step && step.title && (
-        <h1 className=" text-center text-[32px]  font-semibold mb-4 text-balance text-[#2C4F5A]">
+        <h1 className=" text-center text-[27px]  font-semibold mb-4 text-balance text-[#2C4F5A]">
           {step.title}
         </h1>
       )}
