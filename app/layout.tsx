@@ -39,10 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"></meta>
-      </head>
-      <body className={`font-sans antialiased bg-background`}
+      <body className={`font-sans antialiased bg-gradient-to-br from-[#E7FAFE] via-[#F0F1FF] to-[#ECEBFF]`}
       >
         {children}
         <Analytics />

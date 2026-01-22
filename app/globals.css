@@ -81,18 +81,6 @@
 }
 .text-foreground { color: var(--foreground); }
 
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  background-image: url('/background.png');
-  background-size: cover;
-  background-position: center;
-}
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -100,13 +88,4 @@ body::before {
   body {
     @apply bg-background text-foreground;
   }
-}
-header {
-  /* Add padding to the top so text stays below the Dynamic Island */
-  padding-top: env(safe-area-inset-top);
-}
-
-footer {
-  /* Add padding to the bottom so buttons stay above the search bar */
-  padding-bottom: env(safe-area-inset-bottom);
 }
