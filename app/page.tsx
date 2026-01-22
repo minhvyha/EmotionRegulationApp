@@ -43,7 +43,7 @@ export default function EmotionRegulationApp() {
 
   if (!selectedEmotion) {
     return (
-      <div className=" min-h-screen custom-app-bg  flex flex-col items-center justify-start  px-8 py-8">
+      <div className=" min-h-screen   flex flex-col items-center justify-start  px-4 py-8">
           <h1 className="text-foreground text-[32px]  font-medium text-center mb-3 text-balance">
             I am feeling...
           </h1>
@@ -101,7 +101,7 @@ export default function EmotionRegulationApp() {
   const currentStep = selectedEmotion.steps[currentStepIndex];
   const isLastStep = currentStepIndex === selectedEmotion.steps.length - 1;
   return (
-    <div className="min-h-screen  custom-app-bg flex flex-col items-center justify-start px-8 py-8">
+    <div className="min-h-screen   flex flex-col items-center justify-start px-8 py-8">
         {currentStep.type !== "completion" && (
           <button
             onClick={handleExit}
