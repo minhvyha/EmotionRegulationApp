@@ -101,7 +101,7 @@ export default function EmotionRegulationApp() {
   const currentStep = selectedEmotion.steps[currentStepIndex];
   const isLastStep = currentStepIndex === selectedEmotion.steps.length - 1;
   return (
-    <div className="min-h-screen   flex flex-col items-center justify-start px-8 py-8">
+    <div className="min-h-screen flex flex-col items-center justify-start px-8 py-8">
         {currentStep.type !== "completion" && (
           <button
             onClick={handleExit}
@@ -128,7 +128,7 @@ export default function EmotionRegulationApp() {
         />
 
         {/* Footer */}
-        <p className=" text-center mt-auto text-[#2C4F5A] font-medium text-[18px]">
+        <p className=" text-center mt-auto text-[#2C4F5A] pt-4 font-medium text-[18px]">
           {currentStep.type === "completion"
             ? "Come back anytime."
             : "Remember, you can stop at any time"}
