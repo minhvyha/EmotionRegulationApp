@@ -45,9 +45,9 @@ function IconImg({ file = "question", size = 48, alt, className, ...rest }: ImgP
 
 /* Map logical icon names to the actual file base names you provided */
 const NAME_TO_FILE: Record<IconName, string> = {
-  anxious: "anxiety",        // anxiety.png
+  anxious: "shaking",        // anxiety.png
   overwhelmed: "drown",      // drown.png
-  stressed: "shaking",       // shaking.png
+  stressed: "anxiety",       // shaking.png
   angry: "mad",              // mad.png
   sad: "cry",                // cry.png
   lonely: "lonely",          // lonely.png
