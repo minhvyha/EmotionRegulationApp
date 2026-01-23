@@ -5,7 +5,7 @@ import { emotions } from "@/lib/emotions-data";
 import type { Emotion, Step } from "@/lib/emotions-data";
 import { EmotionIcon } from "@/components/emotion-icons";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, LucideMessageCircleQuestion } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 export default function EmotionRegulationApp() {
   const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(null);
@@ -75,7 +75,7 @@ export default function EmotionRegulationApp() {
               variant="outline"
               className="rounded-full bg-[#BADEEA99] hover:bg-[#badeeae9] text-[#3A6978] hover:text-[#3A6978] shadow-md font-bold border-none cursor-pointer px-8"
             >
-              I&apos;m not sure{" "}
+              I'm not sure{" "}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -266,12 +266,11 @@ function StepContent({
             ))}
           </div>
             <button
-              onClick={onContinue}
-              disabled={!selectedChoice}
+              onClick={() => handleEmotionSelect(emotions.find(e => e.id === 'anxious')! , 1 )}
               style={{ boxShadow: "0px 2px 2px 0px #00000040" }}
               className="rounded-[20px] cursor-pointer w-[200px] mx-auto bg-[#FFFFFF99] hover:bg-[#FFFFFFCC] text-[#3A6978] font-bold px-[20px] h-fit p-4 text-base"
             >
-              I’m still not sure
+              I'm still not sure
             </button>
         </div>
         </div>
